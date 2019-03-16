@@ -12,6 +12,7 @@ import java.text.AttributedCharacterIterator;
 
 public class CanvasView extends View {
     Paint paint;
+    private float cvW,cvH;
     private float posX,  posY;
     private float velX,  velY;
 
@@ -22,9 +23,12 @@ public class CanvasView extends View {
 
     @Override
     protected  void onDraw(Canvas cv){
-        paint.setColor(Color.BLUE);
+        cvW = cv.getWidth();
+        cvH = cv.getHeight();
+        paint.setColor(Color.BLACK);
         cv.drawCircle(cv.getWidth()/2 + posX,cv.getHeight()/2 + posY , 50, paint);
     }
+
     public  void setPos(float ax, float ay){
         ax *= -1;
         float dt = 1.0f;
@@ -34,6 +38,10 @@ public class CanvasView extends View {
 
         posY += velY * dt + ay * dt * dt;
         velY += ay * dt;
+
+        if (posX > cvW /2 -50)
+            velX = 0;
+        posX = cvW /2 -50;
 
         invalidate();
     }
